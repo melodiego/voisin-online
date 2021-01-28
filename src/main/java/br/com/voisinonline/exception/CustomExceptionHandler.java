@@ -31,8 +31,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 status);
     }
 
-    @ExceptionHandler(io.sicredi.pautainfo.api.exception.RecordNotFoundException.class)
-    public final ResponseEntity<ErrorResponse> handleRecordNotFoundException(io.sicredi.pautainfo.api.exception.RecordNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(RecordNotFoundException.class)
+    public final ResponseEntity<ErrorResponse> handleRecordNotFoundException(RecordNotFoundException ex, WebRequest request) {
         ErrorResponse error = new ErrorResponse(NOT_FOUND, Collections.singletonList(ex.getLocalizedMessage()));
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
@@ -43,8 +43,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(io.sicredi.pautainfo.api.exception.DuplicatedIDException.class)
-    public final ResponseEntity<ErrorResponse> handleDuplicatedIDException(io.sicredi.pautainfo.api.exception.DuplicatedIDException ex, WebRequest request) {
+    @ExceptionHandler(DuplicatedIDException.class)
+    public final ResponseEntity<ErrorResponse> handleDuplicatedIDException(DuplicatedIDException ex, WebRequest request) {
         ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(), Collections.singletonList(ex.getLocalizedMessage()));
         return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
     }

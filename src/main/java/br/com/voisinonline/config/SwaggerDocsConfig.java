@@ -20,20 +20,20 @@ public class SwaggerDocsConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("io.sicredi.pautainfo.api.controller"))
+                .apis(RequestHandlerSelectors.basePackage("br.com.voisinonline.controller"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(getApiInfo());
     }
 
     private ApiInfo getApiInfo() {
         return new ApiInfo(
-                "Pauta Info API Documentation",
-                "Documentação das API's do Pauta Info",
+                "Voisin Online API Documentation",
+                "Documentação das API's do Voisin Online",
                 "1.0.0",
                 "TERMS OF SERVICE URL",
-                new Contact("Pauta", "", "pauta@testesicredi.com.br"),
+                new Contact("Voisin Online", "", "contato@voisin.com.br"),
                 "LICENSE",
-                "http://www.testesicredi.com.br",
+                "http://www.voisinonline.com.br",
                 Collections.emptyList());
     }
 }
