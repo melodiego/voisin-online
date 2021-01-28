@@ -55,38 +55,38 @@ public class PropertyServiceTest {
 
     @Test
     public void shouldUpdatePropertyDTOValidTest() {
-        Property PropertyIn = BuildProperty.buildProperty();
-        Property PropertyOut = BuildProperty.buildProperty();
+        Property propertyIn = BuildProperty.buildProperty();
+        Property propertyOut = BuildProperty.buildProperty();
         PropertyFormDTO PropertyFormDTO = BuildProperty.buildPropertyFormDTO();
         PropertyDTO PropertyDTO = BuildProperty.buildPropertyDTO();
-        when(repository.findById(id)).thenReturn(Optional.of(PropertyIn));
-        when(repository.save(PropertyIn)).thenReturn(PropertyOut);
-        when(mapper.map(any(), eq(Property.class))).thenReturn(PropertyIn);
+        when(repository.findById(id)).thenReturn(Optional.of(propertyIn));
+        when(repository.save(propertyIn)).thenReturn(propertyOut);
+        when(mapper.map(any(), eq(Property.class))).thenReturn(propertyIn);
         when(mapper.map(any(), eq(PropertyDTO.class))).thenReturn(PropertyDTO);
-        PropertyDTO PropertyDTOSaved = service.update(id, PropertyFormDTO);
-        assertEquals(PropertyDTOSaved, PropertyDTO);
-        verify(repository).save(eq(PropertyIn));
+        PropertyDTO propertyDTOSaved = service.update(id, PropertyFormDTO);
+        assertEquals(propertyDTOSaved, PropertyDTO);
+        verify(repository).save(eq(propertyIn));
     }
 
     @Test(expected = RecordNotFoundException.class)
     public void shouldUpdatePropertyInvalidThrowRecordNotFoundExceptionTest() {
-        PropertyFormDTO PropertyFormDTO = BuildProperty.buildPropertyFormDTO();
+        PropertyFormDTO propertyFormDTO = BuildProperty.buildPropertyFormDTO();
         when(repository.findById(id)).thenReturn(Optional.empty());
-        service.update(id, PropertyFormDTO);
+        service.update(id, propertyFormDTO);
     }
 
     @Test
     public void shouldFindByIdValidTest() {
-        Optional<Property> Property = Optional.of(BuildProperty.buildProperty());
-        PropertyDTO PropertyDTO = BuildProperty.buildPropertyDTO();
+        Optional<Property> property = Optional.of(BuildProperty.buildProperty());
+        PropertyDTO propertyDTO = BuildProperty.buildPropertyDTO();
 
-        when(repository.findById(id)).thenReturn(Property);
-        when(mapper.map(any(), eq(PropertyDTO.class))).thenReturn(PropertyDTO);
+        when(repository.findById(id)).thenReturn(property);
+        when(mapper.map(any(), eq(PropertyDTO.class))).thenReturn(propertyDTO);
 
-        PropertyDTO PropertyDTOSaved = service.findById(id);
-        assertNotNull(PropertyDTOSaved);
-        assertEquals(PropertyDTO, PropertyDTOSaved);
-        assertNotNull(PropertyDTO.getId());
+        PropertyDTO propertyDTOSaved = service.findById(id);
+        assertNotNull(propertyDTOSaved);
+        assertEquals(propertyDTO, propertyDTOSaved);
+        assertNotNull(propertyDTO.getId());
         verify(repository).findById(id);
     }
 
@@ -108,8 +108,8 @@ public class PropertyServiceTest {
     @Test
     public void shouldFindAllPropertyTest() {
         when(repository.findAll()).thenReturn(Collections.singletonList(BuildProperty.buildProperty()));
-        List<PropertyDTO> Propertys = service.findAll();
-        assertEquals(Propertys.size(), 1);
+        List<PropertyDTO> propertiesDTO = service.findAll();
+        assertEquals(propertiesDTO.size(), 1);
         verify(repository).findAll();
     }
 }
