@@ -1,6 +1,9 @@
 package br.com.voisinonline.dto;
 
-import org.springframework.core.serializer.Serializer;
+import lombok.*;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode
@@ -8,4 +11,12 @@ import org.springframework.core.serializer.Serializer;
 @AllArgsConstructor
 @Builder
 public class PropertySectorDTO implements Serializable {
+    private static final long serialVersionUID = -8359076758421035970L;
+
+    private String id;
+    private String name;
+    private String description;
+    private String colorHex;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

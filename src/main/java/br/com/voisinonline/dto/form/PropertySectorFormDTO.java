@@ -10,12 +10,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PropertyFormDTO implements Serializable {
-    private static final long serialVersionUID = 4699268913491499609L;
+public class PropertySectorFormDTO implements Serializable {
+    private static final long serialVersionUID = -2316114613668154022L;
 
     @NotBlank(message = "The name could not be null or empty.")
     private String name;
-    @NotBlank(message = "The totalPastureArea could not be null or empty.")
-    private Long totalPastureArea;
+    @NotBlank(message = "The colorHex could not be null or empty.")
+    private String colorHex;
     private String description;
 }

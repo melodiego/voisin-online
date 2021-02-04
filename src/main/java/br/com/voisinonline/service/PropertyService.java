@@ -30,8 +30,8 @@ public class PropertyService {
     }
 
     public List<PropertyDTO> findAll() {
-        Collection<Property> pautas = repository.findAll();
-        return pautas.stream().map(pauta -> mapper.map(pauta, PropertyDTO.class)).collect(Collectors.toList());
+        Collection<Property> properties = repository.findAll();
+        return properties.stream().map(property -> mapper.map(property, PropertyDTO.class)).collect(Collectors.toList());
     }
 
     public PropertyDTO findById(String id) {
