@@ -22,6 +22,8 @@ public class Property implements Serializable {
     @Indexed
     private String name;
     private String description;
+    private Long totalPastureArea;
+    //TODO: Adicionar Cidade/AL
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 }

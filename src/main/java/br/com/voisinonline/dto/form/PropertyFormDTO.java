@@ -16,6 +16,8 @@ public class PropertyFormDTO implements Serializable {
 
     @NotBlank(message = "The name could not be null or empty.")
     private String name;
+    @NotBlank(message = "The totalPastureArea could not be null or empty.")
+    private Long totalPastureArea;
 
     private String description;
 }
