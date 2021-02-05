@@ -19,5 +19,4 @@ public class PropertySectorDTO implements Serializable {
     private String colorHex;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private PropertyDTO property;
 }

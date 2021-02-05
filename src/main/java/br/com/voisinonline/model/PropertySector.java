@@ -6,6 +6,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -21,12 +23,13 @@ public class PropertySector implements Serializable {
     @Id
     private String id;
     @Indexed
+    @NotBlank
     private String name;
     private String description;
     private String colorHex;
 
-    @DBRef
-    @Indexed
+    @DBRef(lazy = false)
+    @NotNull
     private Property property;
 
     private LocalDateTime createdAt = LocalDateTime.now();

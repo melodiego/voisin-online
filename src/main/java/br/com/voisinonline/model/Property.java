@@ -28,7 +28,4 @@ public class Property implements Serializable {
     //TODO: Adicionar Cidade/AL
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
-
-    @DBRef
-    private List<PropertySector> sectors;
 }

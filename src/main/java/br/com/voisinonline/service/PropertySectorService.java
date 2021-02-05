@@ -41,7 +41,7 @@ public class PropertySectorService {
     }
 
     public List<PropertySectorDTO> findAllByPropertyId(String propertyId) {
-        Collection<PropertySector> propertySectors = repository.findAllByPropertyId(propertyId);
+        Collection<PropertySector> propertySectors = repository.findAllByPropertyIdOrderByNameAsc(propertyId);
         return propertySectors.stream()
                 .map(propertySector -> mapper.map(propertySector, PropertySectorDTO.class))
                 .collect(Collectors.toList());
@@ -55,9 +55,10 @@ public class PropertySectorService {
 
     public PropertySectorDTO save(PropertySectorFormDTO propertySectorFormDTO) {
         Property property = propertyService.findPropertyById(propertySectorFormDTO.getPropertyId());
-        PropertySector propertySector = repository.save(mapper.map(propertySectorFormDTO, PropertySector.class));
+        PropertySector propertySector = mapper.map(propertySectorFormDTO, PropertySector.class);
+        propertySector.setId(null);
         propertySector.setProperty(property);
-
+        repository.save(propertySector);
         return mapper.map(propertySector, PropertySectorDTO.class);
     }
 
@@ -69,7 +70,6 @@ public class PropertySectorService {
         PropertySector propertySector = mapper.map(propertySectorFormDTO, PropertySector.class);
         propertySector.setProperty(property);
         propertySector.setUpdatedAt(LocalDateTime.now());
-
         return mapper.map(repository.save(propertySector), PropertySectorDTO.class);
     }
 

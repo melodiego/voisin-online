@@ -6,6 +6,7 @@ import br.com.voisinonline.dto.form.PropertyFormDTO;
 import br.com.voisinonline.exception.RecordNotFoundException;
 import br.com.voisinonline.model.Property;
 import br.com.voisinonline.repository.PropertyRepository;
+import br.com.voisinonline.repository.PropertySectorRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +26,12 @@ public class PropertyService {
     public static final String CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID = "Cannot find any registry with this ID ";
 
     private final PropertyRepository repository;
+    private final PropertySectorRepository propertySectorRepository;
     private final ModelMapper mapper;
 
-    public PropertyService(PropertyRepository repository, ModelMapper mapper) {
+    public PropertyService(PropertyRepository repository, PropertySectorRepository propertySectorRepository, ModelMapper mapper) {
         this.repository = repository;
+        this.propertySectorRepository = propertySectorRepository;
         this.mapper = mapper;
     }
 
@@ -50,15 +53,9 @@ public class PropertyService {
     }
 
     public List<PropertySectorDTO> findAllSectorsById(String id) {
-        Property property = repository.findById(id).orElseThrow(() ->
-                new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
-        if(Objects.nonNull(property.getSectors())) {
-            return property.getSectors().stream()
-                    .map(sector -> mapper.map(sector, PropertySectorDTO.class))
-                    .collect(Collectors.toList());
-        }
-
-        return new ArrayList<>();
+        return propertySectorRepository.findAllByPropertyIdOrderByNameAsc(id).stream()
+                .map(sector -> mapper.map(sector, PropertySectorDTO.class))
+                .collect(Collectors.toList());
     }
 
     public PropertyDTO save(PropertyFormDTO propertyFormDTO) {

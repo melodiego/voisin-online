@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface PropertySectorRepository extends MongoRepository<PropertySector, String> {
 
-    List<PropertySector> findAllByPropertyId(String id);
+    List<PropertySector> findAllByPropertyIdOrderByNameAsc(String id);
 
 }
