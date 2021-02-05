@@ -42,13 +42,13 @@ public class PropertyController {
     }
 
     @PostMapping
-    public ResponseEntity<PropertyDTO> save(@RequestBody @Valid PropertyFormDTO formDTO) {
-        return new ResponseEntity<>(service.save(formDTO), HttpStatus.CREATED);
+    public ResponseEntity<PropertyDTO> save(@RequestBody @Valid PropertyFormDTO propertyFormDTO) {
+        return new ResponseEntity<>(service.save(propertyFormDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PropertyDTO> update(@PathVariable("id") String id, @RequestBody @Valid PropertyFormDTO formDTO) {
-        return new ResponseEntity<>(service.update(id, formDTO), HttpStatus.OK);
+    public ResponseEntity<PropertyDTO> update(@PathVariable("id") String id, @RequestBody @Valid PropertyFormDTO propertyFormDTO) {
+        return new ResponseEntity<>(service.update(id, propertyFormDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

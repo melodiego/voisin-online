@@ -24,24 +24,17 @@ public class PropertySectorService {
     public static final String CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID = "Cannot find any registry with this ID ";
 
     private final PropertySectorRepository repository;
-    private final ModelMapper mapper;
     private final PropertyService propertyService;
+    private final ModelMapper mapper;
 
-    public PropertySectorService(PropertySectorRepository repository, ModelMapper mapper, PropertyService propertyService) {
+    public PropertySectorService(PropertySectorRepository repository,  PropertyService propertyService, ModelMapper mapper) {
         this.repository = repository;
-        this.mapper = mapper;
         this.propertyService = propertyService;
+        this.mapper = mapper;
     }
 
     public List<PropertySectorDTO> findAll() {
         Collection<PropertySector> propertySectors = repository.findAll();
-        return propertySectors.stream()
-                .map(propertySector -> mapper.map(propertySector, PropertySectorDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    public List<PropertySectorDTO> findAllByPropertyId(String propertyId) {
-        Collection<PropertySector> propertySectors = repository.findAllByPropertyIdOrderByNameAsc(propertyId);
         return propertySectors.stream()
                 .map(propertySector -> mapper.map(propertySector, PropertySectorDTO.class))
                 .collect(Collectors.toList());

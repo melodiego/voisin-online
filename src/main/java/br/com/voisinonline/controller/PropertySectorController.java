@@ -35,13 +35,13 @@ public class PropertySectorController {
     }
 
     @PostMapping
-    public ResponseEntity<PropertySectorDTO> save(@RequestBody @Valid PropertySectorFormDTO formDTO) {
-        return new ResponseEntity<>(service.save(formDTO), HttpStatus.CREATED);
+    public ResponseEntity<PropertySectorDTO> save(@RequestBody @Valid PropertySectorFormDTO propertySectorFormDTO) {
+        return new ResponseEntity<>(service.save(propertySectorFormDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PropertySectorDTO> update(@PathVariable("id") String id, @RequestBody @Valid PropertySectorFormDTO formDTO) {
-        return new ResponseEntity<>(service.update(id, formDTO), HttpStatus.OK);
+    public ResponseEntity<PropertySectorDTO> update(@PathVariable("id") String id, @RequestBody @Valid PropertySectorFormDTO propertySectorFormDTO) {
+        return new ResponseEntity<>(service.update(id, propertySectorFormDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
