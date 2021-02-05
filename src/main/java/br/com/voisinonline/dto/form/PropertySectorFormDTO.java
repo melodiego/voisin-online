@@ -15,6 +15,8 @@ public class PropertySectorFormDTO implements Serializable {
 
     @NotBlank(message = "The name could not be null or empty.")
     private String name;
+    @NotBlank(message = "The propertyId could not be null or empty.")
+    private String propertyId;
     @NotBlank(message = "The colorHex could not be null or empty.")
     private String colorHex;
     private String description;

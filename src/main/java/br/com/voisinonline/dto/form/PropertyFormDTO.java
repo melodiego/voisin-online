@@ -3,6 +3,7 @@ package br.com.voisinonline.dto.form;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -15,7 +16,7 @@ public class PropertyFormDTO implements Serializable {
 
     @NotBlank(message = "The name could not be null or empty.")
     private String name;
-    @NotBlank(message = "The totalPastureArea could not be null or empty.")
+    @NotNull(message = "The totalPastureArea could not be null.")
     private Long totalPastureArea;
     private String description;
 }

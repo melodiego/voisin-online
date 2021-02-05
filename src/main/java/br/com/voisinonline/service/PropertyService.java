@@ -1,6 +1,7 @@
 package br.com.voisinonline.service;
 
 import br.com.voisinonline.dto.PropertyDTO;
+import br.com.voisinonline.dto.PropertySectorDTO;
 import br.com.voisinonline.dto.form.PropertyFormDTO;
 import br.com.voisinonline.exception.RecordNotFoundException;
 import br.com.voisinonline.model.Property;
@@ -11,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +41,24 @@ public class PropertyService {
         Property property = repository.findById(id).orElseThrow(() ->
                 new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
         return mapper.map(property, PropertyDTO.class);
+    }
+
+    public Property findPropertyById(String id) {
+        Property property = repository.findById(id).orElseThrow(() ->
+                new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
+        return mapper.map(property, Property.class);
+    }
+
+    public List<PropertySectorDTO> findAllSectorsById(String id) {
+        Property property = repository.findById(id).orElseThrow(() ->
+                new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
+        if(Objects.nonNull(property.getSectors())) {
+            return property.getSectors().stream()
+                    .map(sector -> mapper.map(sector, PropertySectorDTO.class))
+                    .collect(Collectors.toList());
+        }
+
+        return new ArrayList<>();
     }
 
     public PropertyDTO save(PropertyFormDTO propertyFormDTO) {

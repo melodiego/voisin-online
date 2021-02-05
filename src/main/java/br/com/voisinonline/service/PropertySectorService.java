@@ -1,8 +1,10 @@
 package br.com.voisinonline.service;
 
+import br.com.voisinonline.dto.PropertyDTO;
 import br.com.voisinonline.dto.PropertySectorDTO;
 import br.com.voisinonline.dto.form.PropertySectorFormDTO;
 import br.com.voisinonline.exception.RecordNotFoundException;
+import br.com.voisinonline.model.Property;
 import br.com.voisinonline.model.PropertySector;
 import br.com.voisinonline.repository.PropertySectorRepository;
 import org.modelmapper.ModelMapper;
@@ -23,14 +25,23 @@ public class PropertySectorService {
 
     private final PropertySectorRepository repository;
     private final ModelMapper mapper;
+    private final PropertyService propertyService;
 
-    public PropertySectorService(PropertySectorRepository repository, ModelMapper mapper) {
+    public PropertySectorService(PropertySectorRepository repository, ModelMapper mapper, PropertyService propertyService) {
         this.repository = repository;
         this.mapper = mapper;
+        this.propertyService = propertyService;
     }
 
     public List<PropertySectorDTO> findAll() {
         Collection<PropertySector> propertySectors = repository.findAll();
+        return propertySectors.stream()
+                .map(propertySector -> mapper.map(propertySector, PropertySectorDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<PropertySectorDTO> findAllByPropertyId(String propertyId) {
+        Collection<PropertySector> propertySectors = repository.findAllByPropertyId(propertyId);
         return propertySectors.stream()
                 .map(propertySector -> mapper.map(propertySector, PropertySectorDTO.class))
                 .collect(Collectors.toList());
@@ -43,14 +54,20 @@ public class PropertySectorService {
     }
 
     public PropertySectorDTO save(PropertySectorFormDTO propertySectorFormDTO) {
+        Property property = propertyService.findPropertyById(propertySectorFormDTO.getPropertyId());
         PropertySector propertySector = repository.save(mapper.map(propertySectorFormDTO, PropertySector.class));
+        propertySector.setProperty(property);
+
         return mapper.map(propertySector, PropertySectorDTO.class);
     }
 
     public PropertySectorDTO update(String id, PropertySectorFormDTO propertySectorFormDTO) {
         repository.findById(id).orElseThrow(() ->
                 new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
+        Property property = propertyService.findPropertyById(propertySectorFormDTO.getPropertyId());
+
         PropertySector propertySector = mapper.map(propertySectorFormDTO, PropertySector.class);
+        propertySector.setProperty(property);
         propertySector.setUpdatedAt(LocalDateTime.now());
 
         return mapper.map(repository.save(propertySector), PropertySectorDTO.class);
