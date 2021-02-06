@@ -6,26 +6,32 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(value = "property")
-public class Property implements Serializable {
-    private static final long serialVersionUID = -5864520625219015462L;
+@Document(value = "property_sector")
+public class PropertySector implements Serializable {
+    private static final long serialVersionUID = 6395963032200324766L;
 
     @Id
     private String id;
     @Indexed
+    @NotBlank
     private String name;
     private String description;
-    private Long totalPastureArea;
-    //TODO: Adicionar Cidade/AL
+    private String colorHex;
+
+    @DBRef(lazy = false)
+    @NotNull
+    private Property property;
+
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 }

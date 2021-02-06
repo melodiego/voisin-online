@@ -12,6 +12,7 @@ public interface BuildProperty {
         return Property.builder()
                 .id("123")
                 .name("Test")
+                .totalPastureArea(1231L)
                 .description("voisin")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -22,6 +23,7 @@ public interface BuildProperty {
         return PropertyFormDTO.builder()
                 .name("Test voisin")
                 .description("Description")
+                .totalPastureArea(1231L)
                 .build();
     }
 
@@ -33,6 +35,7 @@ public interface BuildProperty {
         return PropertyDTO.builder()
                 .id("123")
                 .name("Test voisin")
+                .totalPastureArea(1231L)
                 .description("Description")
                 .createdAt(LocalDateTime.now())
                 .build();

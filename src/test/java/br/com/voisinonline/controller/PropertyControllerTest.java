@@ -49,12 +49,13 @@ public class PropertyControllerTest {
         when(service.save(any())).thenReturn(propertyDTO);
 
         mockMvc.perform(
-                post(endpointAPI).content(mapper.writeValueAsString(propertyDTO)).contentType(MediaType.APPLICATION_JSON))
+                post(endpointAPI).content(mapper.writeValueAsString(propertyFormDTO)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.id").value(propertyDTO.getId()))
-                .andExpect(jsonPath("$.name").value(propertyDTO.getName()))
-                .andExpect(jsonPath("$.description").value(propertyDTO.getDescription()))
+                .andExpect(jsonPath("$.name").value(propertyFormDTO.getName()))
+                .andExpect(jsonPath("$.totalPastureArea").value(propertyFormDTO.getTotalPastureArea()))
+                .andExpect(jsonPath("$.description").value(propertyFormDTO.getDescription()))
                 .andExpect(jsonPath("$.createdAt").exists());
 
         verify(service).save(eq(propertyFormDTO));

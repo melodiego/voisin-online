@@ -1,6 +1,7 @@
 package br.com.voisinonline.controller;
 
 import br.com.voisinonline.dto.PropertyDTO;
+import br.com.voisinonline.dto.PropertySectorDTO;
 import br.com.voisinonline.dto.form.PropertyFormDTO;
 import br.com.voisinonline.service.PropertyService;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 
 @Validated
 @CrossOrigin
@@ -34,14 +36,19 @@ public class PropertyController {
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/sectors")
+    public ResponseEntity<List<PropertySectorDTO>> getByAllSectorsBy(@PathVariable(value = "id") @Valid String id) {
+        return new ResponseEntity<>(service.findAllSectorsById(id), HttpStatus.OK);
+    }
+
     @PostMapping
-    public ResponseEntity<PropertyDTO> save(@RequestBody @Valid PropertyFormDTO formDTO) {
-        return new ResponseEntity<>(service.save(formDTO), HttpStatus.CREATED);
+    public ResponseEntity<PropertyDTO> save(@RequestBody @Valid PropertyFormDTO propertyFormDTO) {
+        return new ResponseEntity<>(service.save(propertyFormDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PropertyDTO> update(@PathVariable("id") String id, @RequestBody @Valid PropertyFormDTO formDTO) {
-        return new ResponseEntity<>(service.update(id, formDTO), HttpStatus.OK);
+    public ResponseEntity<PropertyDTO> update(@PathVariable("id") String id, @RequestBody @Valid PropertyFormDTO propertyFormDTO) {
+        return new ResponseEntity<>(service.update(id, propertyFormDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
