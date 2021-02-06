@@ -14,7 +14,7 @@ spring:
   security:
     firebase-props:
       database-url: ${FIREBASE_DATABASE}
-      enable-strict-server-session: false
+      enable-strict-server-session: ${ENABLE_SERVER_SESSION}
       enable-check-session-revoked: false
       enable-logout-everywhere: false
       session-expiry-in-days: 5
@@ -22,11 +22,11 @@ spring:
       max-age-in-minutes: 7200
       http-only: true
       secure: true
-      domain: ${DOMAIN}
+      domain: ${CORS_DOMAIN}
       path: /
     allow-credentials: true
     allowed-origins:
-      - https://${DOMAIN:http://localhost:8080}
+      - https://${CORS_DOMAIN}
       - http://localhost:3000
     allowed-methods:
       - GET
@@ -53,9 +53,15 @@ spring:
     allowed-public-apis:
       - /favicon.ico
       - /session/login
-      - /public/**
+      - /public/*
     exposed-headers:
       - X-Xsrf-Token
+    valid-application-roles:
+      - ROLE_SUPER
+      - ROLE_ADMIN
+      - ROLE_SELLER
+      - ROLE_CUSTOMER
+    super-admins: ${SUPER_ADMINS}
 server:
   port: 8080
 
