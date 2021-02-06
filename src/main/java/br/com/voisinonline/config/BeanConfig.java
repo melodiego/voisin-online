@@ -11,4 +11,5 @@ public class BeanConfig {
     public ModelMapper defaultModelMapper() {
         return new ModelMapper();
     }
+
 }

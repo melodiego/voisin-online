@@ -1,78 +1,103 @@
 package br.com.voisinonline.config.security;
 
-import br.com.voisinonline.config.security.auth.Credentials;
-import br.com.voisinonline.config.security.auth.SecurityProperties;
-import br.com.voisinonline.config.security.auth.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+
+import br.com.voisinonline.config.security.auth.Credentials;
+import br.com.voisinonline.config.security.auth.SecurityProperties;
+import br.com.voisinonline.config.security.auth.User;
+import br.com.voisinonline.config.security.roles.RoleConstants;
+import br.com.voisinonline.config.security.roles.RoleService;
+import br.com.voisinonline.config.security.auth.Credentials.CredentialType;
 
 @Component
 @Slf4j
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
-    SecurityService securityService;
+    private SecurityService securityService;
 
     @Autowired
-    SecurityProperties restSecProps;
+    private CookieService cookieUtils;
 
     @Autowired
-    CookieUtilsService cookieUtils;
+    private SecurityProperties securityProps;
 
     @Autowired
-    SecurityProperties securityProps;
+    RoleService securityRoleService;
 
+    @Autowired
+    private FirebaseAuth firebaseAuth;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        verifyToken(request);
+        authorize(request);
         filterChain.doFilter(request, response);
     }
 
-    private void verifyToken(HttpServletRequest request) {
-        String session = null;
+    private void authorize(HttpServletRequest request) {
+        String sessionCookieValue = null;
         FirebaseToken decodedToken = null;
-        Credentials.CredentialType type = null;
+        CredentialType type = null;
+        // Token verification
         boolean strictServerSessionEnabled = securityProps.getFirebaseProps().isEnableStrictServerSession();
         Cookie sessionCookie = cookieUtils.getCookie("session");
         String token = securityService.getBearerToken(request);
-        logger.info(token);
         try {
             if (sessionCookie != null) {
-                session = sessionCookie.getValue();
-                decodedToken = FirebaseAuth.getInstance().verifySessionCookie(session,
+                sessionCookieValue = sessionCookie.getValue();
+                decodedToken = firebaseAuth.verifySessionCookie(sessionCookieValue,
                         securityProps.getFirebaseProps().isEnableCheckSessionRevoked());
-                type = Credentials.CredentialType.SESSION;
-            } else if (!strictServerSessionEnabled) {
-                if (token != null && !token.equalsIgnoreCase("undefined")) {
-                    decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
-                    type = Credentials.CredentialType.ID_TOKEN;
-                }
+                type = CredentialType.SESSION;
+            } else if (!strictServerSessionEnabled && token != null && !token.equals("null")
+                    && !token.equalsIgnoreCase("undefined")) {
+                decodedToken = firebaseAuth.verifyIdToken(token);
+                type = CredentialType.ID_TOKEN;
             }
         } catch (FirebaseAuthException e) {
-            e.printStackTrace();
             log.error("Firebase Exception:: ", e.getLocalizedMessage());
         }
-
+        List<GrantedAuthority> authorities = new ArrayList<>();
         User user = firebaseTokenToUserDto(decodedToken);
+        // Handle roles
         if (user != null) {
+            // Handle Super Role
+            if (securityProps.getSuperAdmins().contains(user.getEmail())) {
+                if (!decodedToken.getClaims().containsKey(RoleConstants.ROLE_SUPER)) {
+                    try {
+                        securityRoleService.addRole(decodedToken.getUid(), RoleConstants.ROLE_SUPER);
+                    } catch (Exception e) {
+                        log.error("Super Role registeration expcetion ", e);
+                    }
+                }
+                authorities.add(new SimpleGrantedAuthority(RoleConstants.ROLE_SUPER));
+            }
+            // Handle Other roles
+            decodedToken.getClaims().forEach((k, v) -> authorities.add(new SimpleGrantedAuthority(k)));
+            // Set security context
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,
-                    new Credentials(type, decodedToken, token, session), null);
+                    new Credentials(type, decodedToken, token, sessionCookieValue), authorities);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

@@ -9,16 +9,17 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.TimeUnit;
 
 @Service
-public class CookieUtilsService {
+public class CookieService {
 
     private final HttpServletRequest httpServletRequest;
     private final HttpServletResponse httpServletResponse;
     private final SecurityProperties restSecProps;
 
-    public CookieUtilsService(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                              SecurityProperties restSecProps) {
+    public CookieService(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                         SecurityProperties restSecProps) {
         this.httpServletRequest = httpServletRequest;
         this.httpServletResponse = httpServletResponse;
         this.restSecProps = restSecProps;
@@ -28,8 +29,8 @@ public class CookieUtilsService {
         return WebUtils.getCookie(httpServletRequest, name);
     }
 
-    public void setCookie(String name, String value, int expiryInMinutes) {
-        int expiresInSeconds = expiryInMinutes * 60 * 60;
+    public void setCookie(String name, String value, int expiryInDays) {
+        int expiresInSeconds = (int) TimeUnit.DAYS.toSeconds(expiryInDays);
         Cookie cookie = new Cookie(name, value);
         cookie.setSecure(restSecProps.getCookieProps().isSecure());
         cookie.setPath(restSecProps.getCookieProps().getPath());
@@ -38,8 +39,8 @@ public class CookieUtilsService {
         httpServletResponse.addCookie(cookie);
     }
 
-    public void setSecureCookie(String name, String value, int expiryInMinutes) {
-        int expiresInSeconds = expiryInMinutes * 60 * 60;
+    public void setSecureCookie(String name, String value, int expiryInDays) {
+        int expiresInSeconds = (int) TimeUnit.DAYS.toSeconds(expiryInDays);
         Cookie cookie = new Cookie(name, value);
         cookie.setHttpOnly(restSecProps.getCookieProps().isHttpOnly());
         cookie.setSecure(restSecProps.getCookieProps().isSecure());

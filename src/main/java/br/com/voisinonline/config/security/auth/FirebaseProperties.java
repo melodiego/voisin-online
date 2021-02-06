@@ -13,8 +13,8 @@ import java.io.Serializable;
 public class FirebaseProperties implements Serializable {
     private static final long serialVersionUID = -2809824144740738727L;
 
-    private String databaseUrl;
     private int sessionExpiryInDays;
+    private String databaseUrl;
     private boolean enableStrictServerSession;
     private boolean enableCheckSessionRevoked;
     private boolean enableLogoutEverywhere;
