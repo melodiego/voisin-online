@@ -54,7 +54,7 @@ public class PropertySectorService {
     public PropertySector findPropertySectorById(String id) {
         PropertySector propertySector = repository.findById(id).orElseThrow(() ->
                 new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
-        return mapper.map(propertySector, PropertySector.class);
+        return propertySector;
     }
 
     public List<PicketDTO> findAllPicketsById(String id) {

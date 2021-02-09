@@ -10,36 +10,34 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(value = "property")
-public class Property implements Serializable {
-    private static final long serialVersionUID = -5864520625219015462L;
+@Document(value = "state")
+public class State implements Serializable {
+    private static final long serialVersionUID = 5783311217454483955L;
 
     @Transient
-    public static final String SEQUENCE_NAME = "property_sequence";
+    public static final String SEQUENCE_NAME = "state_sequence";
 
     @Id
     @Field("id")
-    private String id;
+    private Long id;
     @Indexed
-    @Field("name")
     @NotBlank
+    @Field("name")
     private String name;
-    @Field("description")
-    private String description;
-    @Field("total_pasture_area")
-    private Long totalPastureArea;
+    @Field("uf")
+    private String uf;
+    @Field("cities")
+    private List<City> cities;
     @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
     @Field("updated_at")
     private LocalDateTime updatedAt;
-
-    //TODO: Adicionar Cidade/AL
-
-
 }

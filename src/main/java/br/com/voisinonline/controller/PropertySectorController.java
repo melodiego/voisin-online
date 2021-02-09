@@ -37,7 +37,7 @@ public class PropertySectorController {
     }
 
     @GetMapping("/{id}/pickets")
-    public ResponseEntity<List<PicketDTO>> getByAllSectorsBy(@PathVariable(value = "id") @Valid String id) {
+    public ResponseEntity<List<PicketDTO>> getAllPickets(@PathVariable(value = "id") @Valid String id) {
         return new ResponseEntity<>(service.findAllPicketsById(id), HttpStatus.OK);
     }
 
