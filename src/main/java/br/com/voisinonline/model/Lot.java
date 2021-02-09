@@ -2,7 +2,6 @@ package br.com.voisinonline.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,9 +17,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(value = "pickets")
-public class Picket implements Serializable {
-    private static final long serialVersionUID = 7001816262660567503L;
+@Document(value = "lots")
+public class Lot implements Serializable {
+    private static final long serialVersionUID = -6947803023197083826L;
 
     @Id
     @Field("id")
