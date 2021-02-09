@@ -1,12 +1,13 @@
 package br.com.voisinonline.service;
 
+import br.com.voisinonline.dto.LotDTO;
 import br.com.voisinonline.dto.PicketDTO;
-import br.com.voisinonline.dto.PropertyDTO;
 import br.com.voisinonline.dto.PropertySectorDTO;
 import br.com.voisinonline.dto.form.PropertySectorFormDTO;
 import br.com.voisinonline.exception.RecordNotFoundException;
 import br.com.voisinonline.model.Property;
 import br.com.voisinonline.model.PropertySector;
+import br.com.voisinonline.repository.LotRepository;
 import br.com.voisinonline.repository.PicketRepository;
 import br.com.voisinonline.repository.PropertySectorRepository;
 import org.modelmapper.ModelMapper;
@@ -28,14 +29,16 @@ public class PropertySectorService {
     private final PropertySectorRepository repository;
     private final PicketRepository picketRepository;
     private final PropertyService propertyService;
+    private final LotRepository lotRepository;
     private final ModelMapper mapper;
 
     public PropertySectorService(PropertySectorRepository repository, PropertyService propertyService, ModelMapper mapper,
-                                 PicketRepository picketRepository) {
+                                 PicketRepository picketRepository, LotRepository lotRepository) {
         this.repository = repository;
         this.propertyService = propertyService;
         this.mapper = mapper;
         this.picketRepository = picketRepository;
+        this.lotRepository = lotRepository;
     }
 
     public List<PropertySectorDTO> findAll() {
@@ -60,6 +63,12 @@ public class PropertySectorService {
     public List<PicketDTO> findAllPicketsById(String id) {
         return picketRepository.findAllBySectorIdOrderByNameAsc(id).stream()
                 .map(picket -> mapper.map(picket, PicketDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<LotDTO> findAllLotsById(String id) {
+        return lotRepository.findAllBySectorIdOrderByNameAsc(id).stream()
+                .map(lot -> mapper.map(lot, LotDTO.class))
                 .collect(Collectors.toList());
     }
 
