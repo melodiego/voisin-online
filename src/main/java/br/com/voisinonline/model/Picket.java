@@ -3,10 +3,12 @@ package br.com.voisinonline.model;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -15,9 +17,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(value = "property")
-public class Property implements Serializable {
-    private static final long serialVersionUID = -5864520625219015462L;
+@Document(value = "pickets")
+public class Picket implements Serializable {
+    private static final long serialVersionUID = 7001816262660567503L;
 
     @Id
     @Field("id")
@@ -28,14 +30,11 @@ public class Property implements Serializable {
     private String name;
     @Field("description")
     private String description;
-    @Field("total_pasture_area")
-    private Long totalPastureArea;
+    @DBRef(lazy = false)
+    @NotNull
+    private PropertySector sector;
     @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
     @Field("updated_at")
     private LocalDateTime updatedAt;
-
-    //TODO: Adicionar Cidade/AL
-
-
 }

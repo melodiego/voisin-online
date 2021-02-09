@@ -1,11 +1,13 @@
 package br.com.voisinonline.service;
 
+import br.com.voisinonline.dto.PicketDTO;
 import br.com.voisinonline.dto.PropertyDTO;
 import br.com.voisinonline.dto.PropertySectorDTO;
 import br.com.voisinonline.dto.form.PropertySectorFormDTO;
 import br.com.voisinonline.exception.RecordNotFoundException;
 import br.com.voisinonline.model.Property;
 import br.com.voisinonline.model.PropertySector;
+import br.com.voisinonline.repository.PicketRepository;
 import br.com.voisinonline.repository.PropertySectorRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -24,13 +26,16 @@ public class PropertySectorService {
     public static final String CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID = "Cannot find any registry with this ID ";
 
     private final PropertySectorRepository repository;
+    private final PicketRepository picketRepository;
     private final PropertyService propertyService;
     private final ModelMapper mapper;
 
-    public PropertySectorService(PropertySectorRepository repository,  PropertyService propertyService, ModelMapper mapper) {
+    public PropertySectorService(PropertySectorRepository repository, PropertyService propertyService, ModelMapper mapper,
+                                 PicketRepository picketRepository) {
         this.repository = repository;
         this.propertyService = propertyService;
         this.mapper = mapper;
+        this.picketRepository = picketRepository;
     }
 
     public List<PropertySectorDTO> findAll() {
@@ -44,6 +49,18 @@ public class PropertySectorService {
         PropertySector propertySector = repository.findById(id).orElseThrow(() ->
                 new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
         return mapper.map(propertySector, PropertySectorDTO.class);
+    }
+
+    public PropertySector findPropertySectorById(String id) {
+        PropertySector propertySector = repository.findById(id).orElseThrow(() ->
+                new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
+        return mapper.map(propertySector, PropertySector.class);
+    }
+
+    public List<PicketDTO> findAllPicketsById(String id) {
+        return picketRepository.findAllBySectorIdOrderByNameAsc(id).stream()
+                .map(picket -> mapper.map(picket, PicketDTO.class))
+                .collect(Collectors.toList());
     }
 
     public PropertySectorDTO save(PropertySectorFormDTO propertySectorFormDTO) {

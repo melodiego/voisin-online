@@ -1,5 +1,6 @@
 package br.com.voisinonline.controller;
 
+import br.com.voisinonline.dto.PicketDTO;
 import br.com.voisinonline.dto.PropertySectorDTO;
 import br.com.voisinonline.dto.form.PropertySectorFormDTO;
 import br.com.voisinonline.service.PropertySectorService;
@@ -11,6 +12,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 
 @Validated
 @CrossOrigin
@@ -32,6 +34,11 @@ public class PropertySectorController {
     @GetMapping("/{id}")
     public ResponseEntity<PropertySectorDTO> getById(@PathVariable(value = "id") @Valid String id) {
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/pickets")
+    public ResponseEntity<List<PicketDTO>> getByAllSectorsBy(@PathVariable(value = "id") @Valid String id) {
+        return new ResponseEntity<>(service.findAllPicketsById(id), HttpStatus.OK);
     }
 
     @PostMapping
