@@ -3,6 +3,7 @@ package br.com.voisinonline.dto.form;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -15,7 +16,9 @@ public class LotFormDTO implements Serializable {
 
     @NotBlank(message = "The name could not be null or empty.")
     private String name;
-    @NotBlank(message = "The propertySectorId could not be null or empty.")
+    @NotBlank(message = "The sector id could not be null or empty.")
     private String propertySectorId;
+    @NotNull(message = "The category id could not be null or empty.")
+    private Long categoryId;
     private String description;
 }
