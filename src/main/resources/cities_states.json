@@ -1190,7 +1190,6 @@
 
 // Rio Grande do Norte
 {
-"uf":24,
 "uf":"RN",
 "name":"Rio Grande do Norte",
 "cities": [
@@ -1368,7 +1367,6 @@
 
 // Paraíba
 {
-"uf":25,
 "uf":"PB",
 "name":"Paraíba",
 "cities": [
@@ -1603,7 +1601,6 @@
 
 // Pernambuco
 {
-"uf":26,
 "uf":"PE",
 "name":"Pernambuco",
 "cities": [
@@ -1800,7 +1797,6 @@
 
 // Alagoas
 {
-"uf":27,
 "uf":"AL",
 "name":"Alagoas",
 "cities": [
@@ -1914,7 +1910,6 @@
 
 // Bahia
 {
-"uf":29,
 "uf":"BA",
 "name":"Bahia",
 "cities": [
@@ -2345,7 +2340,6 @@
 
 // Minas Gerais
 {
-"uf":31,
 "uf":"MG",
 "name":"Minas Gerais",
 "cities": [
@@ -3211,7 +3205,6 @@
 
 // Espírito Santo
 {
-"uf":32,
 "uf":"ES",
 "name":"Espírito Santo",
 "cities": [
@@ -3303,7 +3296,6 @@
 
 // Rio de Janeiro
 {
-"uf":33,
 "uf":"RJ",
 "name":"Rio de Janeiro",
 "cities": [
@@ -3410,7 +3402,6 @@
 
 // São Paulo
 {
-"uf":35,
 "uf":"SP",
 "name":"São Paulo",
 "cities": [
@@ -4069,7 +4060,6 @@
 
 // Paraná
 {
-"uf":41,
 "uf":"PR",
 "name":"Paraná",
 "cities": [
@@ -4481,7 +4471,6 @@
 
 // Santa Catarina
 {
-"uf":42,
 "uf":"SC",
 "name":"Santa Catarina",
 "cities": [
@@ -4790,7 +4779,6 @@
 
 // Rio Grande do Sul
 {
-"uf":43,
 "uf":"RS",
 "name":"Rio Grande do Sul",
 "cities": [
@@ -5301,7 +5289,6 @@
 
 // Mato Grosso do Sul
 {
-"uf":50,
 "uf":"MS",
 "name":"Mato Grosso do Sul",
 "cities": [
@@ -5392,7 +5379,6 @@
 
 // Mato Grosso
 {
-"uf":51,
 "uf":"MT",
 "name":"Mato Grosso",
 "cities": [
@@ -5545,7 +5531,6 @@
 
 // Goiás
 {
-"uf":52,
 "uf":"GO",
 "name":"Goiás",
 "cities": [
