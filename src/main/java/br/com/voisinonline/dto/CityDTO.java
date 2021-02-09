@@ -12,6 +12,6 @@ import java.io.Serializable;
 public class CityDTO implements Serializable {
     private static final long serialVersionUID = 490457834076654747L;
 
-    private String codeIBGE;
+    private String codeIbge;
     private String name;
 }

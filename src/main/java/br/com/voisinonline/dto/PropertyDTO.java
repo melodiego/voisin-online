@@ -16,6 +16,7 @@ public class PropertyDTO implements Serializable {
     private String id;
     private String name;
     private String description;
+    private CityDTO city;
     private Long totalPastureArea;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

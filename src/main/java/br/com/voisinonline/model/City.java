@@ -15,7 +15,7 @@ public class City implements Serializable {
     private static final long serialVersionUID = 3041993370309973365L;
 
     @Field("code_ibge")
-    private String codeIBGE;
+    private String codeIbge;
     @NotBlank
     @Field("name")
     private String name;

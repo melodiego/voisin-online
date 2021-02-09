@@ -1,14 +1,10 @@
 package br.com.voisinonline.service;
 
 import br.com.voisinonline.dto.CityDTO;
-import br.com.voisinonline.dto.PropertyDTO;
-import br.com.voisinonline.dto.PropertySectorDTO;
 import br.com.voisinonline.dto.StateDTO;
-import br.com.voisinonline.dto.form.PropertyFormDTO;
 import br.com.voisinonline.dto.form.StateFormDTO;
 import br.com.voisinonline.exception.RecordNotFoundException;
 import br.com.voisinonline.model.Picket;
-import br.com.voisinonline.model.Property;
 import br.com.voisinonline.model.State;
 import br.com.voisinonline.repository.StateRepository;
 import org.modelmapper.ModelMapper;
@@ -46,6 +42,11 @@ public class StateService {
         State state = repository.findById(id).orElseThrow(() ->
                 new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
         return mapper.map(state, StateDTO.class);
+    }
+
+    public State findStateById(Long id) {
+        return repository.findById(id).orElseThrow(() ->
+                new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
     }
 
     public List<CityDTO> findAllCitiesByStateId(Long id) {

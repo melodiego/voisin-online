@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode
@@ -19,9 +20,9 @@ import java.time.LocalDateTime;
 @Document(value = "property")
 public class Property implements Serializable {
     private static final long serialVersionUID = -5864520625219015462L;
-
-    @Transient
-    public static final String SEQUENCE_NAME = "property_sequence";
+//
+//    @Transient
+//    public static final String SEQUENCE_NAME = "property_sequence";
 
     @Id
     @Field("id")
@@ -38,8 +39,6 @@ public class Property implements Serializable {
     private LocalDateTime createdAt = LocalDateTime.now();
     @Field("updated_at")
     private LocalDateTime updatedAt;
-
-    //TODO: Adicionar Cidade/AL
-
-
+    @Field("city")
+    private City city;
 }
