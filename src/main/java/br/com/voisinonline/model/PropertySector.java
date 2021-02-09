@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,10 +22,13 @@ public class PropertySector implements Serializable {
     private static final long serialVersionUID = 6395963032200324766L;
 
     @Id
+    @Field("id")
     private String id;
     @Indexed
     @NotBlank
+    @Field("name")
     private String name;
+    @Field("description")
     private String description;
     private String colorHex;
 
@@ -32,6 +36,8 @@ public class PropertySector implements Serializable {
     @NotNull
     private Property property;
 
+    @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
+    @Field("updated_at")
     private LocalDateTime updatedAt;
 }
