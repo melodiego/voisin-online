@@ -33,6 +33,9 @@ public class Lot implements Serializable {
     @DBRef(lazy = false)
     @NotNull
     private PropertySector sector;
+    @DBRef(lazy = false)
+    @NotNull
+    private Category category;
     @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
     @Field("updated_at")
