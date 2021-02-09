@@ -18,22 +18,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(value = "pickets")
-public class Picket implements Serializable {
-    private static final long serialVersionUID = 7001816262660567503L;
+@Document(value = "categories")
+public class Category implements Serializable {
+    private static final long serialVersionUID = 3979905557978335964L;
+
+    @Transient
+    public static final String SEQUENCE_NAME = "category_sequence";
 
     @Id
     @Field("id")
-    private String id;
+    private Long id;
     @Indexed
     @Field("name")
     @NotBlank
     private String name;
     @Field("description")
     private String description;
-    @DBRef(lazy = false)
-    @NotNull
-    private PropertySector sector;
     @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
     @Field("updated_at")

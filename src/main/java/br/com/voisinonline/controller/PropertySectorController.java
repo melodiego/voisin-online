@@ -1,5 +1,6 @@
 package br.com.voisinonline.controller;
 
+import br.com.voisinonline.dto.LotDTO;
 import br.com.voisinonline.dto.PicketDTO;
 import br.com.voisinonline.dto.PropertySectorDTO;
 import br.com.voisinonline.dto.form.PropertySectorFormDTO;
@@ -39,6 +40,11 @@ public class PropertySectorController {
     @GetMapping("/{id}/pickets")
     public ResponseEntity<List<PicketDTO>> getAllPickets(@PathVariable(value = "id") @Valid String id) {
         return new ResponseEntity<>(service.findAllPicketsById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/lots")
+    public ResponseEntity<List<LotDTO>> getAllLots(@PathVariable(value = "id") @Valid String id) {
+        return new ResponseEntity<>(service.findAllLotsById(id), HttpStatus.OK);
     }
 
     @PostMapping

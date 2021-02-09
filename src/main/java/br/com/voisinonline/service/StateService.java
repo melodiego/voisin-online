@@ -59,7 +59,7 @@ public class StateService {
 
     public StateDTO save(StateFormDTO stateFormDTO) {
         State state = mapper.map(stateFormDTO, State.class);
-        state.setId(sequenceGeneratorService.generateSequence(Picket.SEQUENCE_NAME));
+        state.setId(sequenceGeneratorService.generateSequence(State.SEQUENCE_NAME));
         repository.save(state);
         return mapper.map(state, StateDTO.class);
     }
