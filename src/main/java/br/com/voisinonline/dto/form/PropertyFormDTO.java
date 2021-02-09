@@ -18,5 +18,9 @@ public class PropertyFormDTO implements Serializable {
     private String name;
     @NotNull(message = "The totalPastureArea could not be null.")
     private Long totalPastureArea;
+    @NotNull(message = "The uf could not be null or empty.")
+    private Long ufId;
+    @NotBlank(message = "The code ibge could not be null or empty.")
+    private String cityCodeIbge;
     private String description;
 }
