@@ -2,12 +2,10 @@ package br.com.voisinonline.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,23 +15,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(value = "property_sector")
-public class PropertySector implements Serializable {
-    private static final long serialVersionUID = 6395963032200324766L;
+@Document(value = "lot_allocate")
+public class LotAllocate implements Serializable {
+    private static final long serialVersionUID = -5682635962294673158L;
 
     @Id
     @Field("id")
     private String id;
-    @Indexed
-    @NotBlank
-    @Field("name")
-    private String name;
-    @Field("description")
-    private String description;
-    private String colorHex;
     @DBRef(lazy = false)
     @NotNull
-    private Property property;
+    private Lot lot;
+    @DBRef(lazy = false)
+    @NotNull
+    private PropertySector sector;
+    @DBRef(lazy = false)
+    @NotNull
+    private Picket picket;
     @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
     @Field("updated_at")
