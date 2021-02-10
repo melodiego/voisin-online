@@ -55,8 +55,7 @@ public class LotAllocateService {
         Lot lot = lotService.findLotById(lotAllocateFormDTO.getLotId());
         PropertySector propertySector = propertySectorService.findPropertySectorById(lotAllocateFormDTO.getSectorId());
         Picket picket = picketService.findPicketById(lotAllocateFormDTO.getPicketId());
-        LotAllocate lotAllocate = mapper.map(lotAllocateFormDTO, LotAllocate.class);
-        lotAllocate.setId(null);
+        LotAllocate lotAllocate = new LotAllocate();
         lotAllocate.setLot(lot);
         lotAllocate.setSector(propertySector);
         lotAllocate.setPicket(picket);
@@ -66,14 +65,12 @@ public class LotAllocateService {
     }
 
     public LotAllocateDTO update(String id, LotAllocateFormDTO lotAllocateFormDTO) {
-        repository.findById(id).orElseThrow(() ->
+        LotAllocate lotAllocate = repository.findById(id).orElseThrow(() ->
                 new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
 
         Lot lot = lotService.findLotById(lotAllocateFormDTO.getLotId());
         PropertySector propertySector = propertySectorService.findPropertySectorById(lotAllocateFormDTO.getSectorId());
         Picket picket = picketService.findPicketById(lotAllocateFormDTO.getPicketId());
-
-        LotAllocate lotAllocate = mapper.map(lotAllocateFormDTO, LotAllocate.class);
 
         lotAllocate.setLot(lot);
         lotAllocate.setSector(propertySector);
