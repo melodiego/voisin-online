@@ -20,9 +20,6 @@ import java.util.List;
 @Document(value = "property")
 public class Property implements Serializable {
     private static final long serialVersionUID = -5864520625219015462L;
-//
-//    @Transient
-//    public static final String SEQUENCE_NAME = "property_sequence";
 
     @Id
     @Field("id")

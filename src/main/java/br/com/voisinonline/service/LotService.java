@@ -48,6 +48,11 @@ public class LotService {
         return mapper.map(lot, LotDTO.class);
     }
 
+    public Lot findLotById(String id) {
+        return repository.findById(id).orElseThrow(() ->
+                new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
+    }
+
     public LotDTO save(LotFormDTO lotFormDTO) {
         PropertySector propertySector = propertySectorService.findPropertySectorById(lotFormDTO.getPropertySectorId());
         Category category = categoryService.findCategoryById(lotFormDTO.getCategoryId());

@@ -2,7 +2,6 @@ package br.com.voisinonline.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,9 +20,6 @@ import java.time.LocalDateTime;
 @Document(value = "property_sector")
 public class PropertySector implements Serializable {
     private static final long serialVersionUID = 6395963032200324766L;
-
-    @Transient
-    public static final String SEQUENCE_NAME = "property_sector_sequence";
 
     @Id
     @Field("id")

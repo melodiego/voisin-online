@@ -44,6 +44,11 @@ public class PicketService {
         return mapper.map(picket, PicketDTO.class);
     }
 
+    public Picket findPicketById(String id) {
+        return repository.findById(id).orElseThrow(() ->
+                new RecordNotFoundException(CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID + id));
+    }
+
     public PicketDTO save(PicketFormDTO picketFormDTO) {
         PropertySector propertySector = propertySectorService.findPropertySectorById(picketFormDTO.getPropertySectorId());
         Picket picket = mapper.map(picketFormDTO, Picket.class);
