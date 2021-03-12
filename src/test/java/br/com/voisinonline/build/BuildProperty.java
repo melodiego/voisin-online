@@ -23,6 +23,8 @@ public interface BuildProperty {
         return PropertyFormDTO.builder()
                 .name("Test voisin")
                 .description("Description")
+                .ufId(1L)
+                .cityCodeIbge("123")
                 .totalPastureArea(1231L)
                 .build();
     }
@@ -38,6 +40,7 @@ public interface BuildProperty {
                 .totalPastureArea(1231L)
                 .description("Description")
                 .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
     }
 }

@@ -1,14 +1,19 @@
 package br.com.voisinonline.controller;
 
 import br.com.voisinonline.build.BuildProperty;
+import br.com.voisinonline.build.BuildState;
 import br.com.voisinonline.dto.PropertyDTO;
 import br.com.voisinonline.dto.form.PropertyFormDTO;
 import br.com.voisinonline.exception.BadRequestException;
 import br.com.voisinonline.exception.RecordNotFoundException;
+import br.com.voisinonline.model.State;
+import br.com.voisinonline.repository.StateRepository;
 import br.com.voisinonline.service.PropertyService;
+import br.com.voisinonline.service.StateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -36,6 +41,9 @@ public class PropertyControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
+    private StateService stateService;
+
+    @MockBean
     private PropertyService service;
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -45,7 +53,8 @@ public class PropertyControllerTest {
     public void shouldCreatePropertyWithAValidRequestTest() throws Exception {
         PropertyDTO propertyDTO = BuildProperty.buildPropertyDTO();
         PropertyFormDTO propertyFormDTO = BuildProperty.buildPropertyFormDTO();
-
+        State state = BuildState.buildState();
+        when(stateService.findStateById(1L)).thenReturn(state);
         when(service.save(any())).thenReturn(propertyDTO);
 
         mockMvc.perform(
@@ -74,14 +83,17 @@ public class PropertyControllerTest {
     public void shouldUpdatePropertyWithAValidRequestTest() throws Exception {
         PropertyDTO propertyDTO = BuildProperty.buildPropertyDTO();
         PropertyFormDTO propertyFormDTO = BuildProperty.buildPropertyFormDTO();
+        State state = BuildState.buildState();
+        when(stateService.findStateById(1L)).thenReturn(state);
         when(service.update(anyString(), eq(propertyFormDTO))).thenReturn(propertyDTO);
         mockMvc.perform(put((String.format("%s/%s", endpointAPI, "123")))
                 .content(mapper.writeValueAsString(propertyDTO)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.id").value(propertyDTO.getId()))
-                .andExpect(jsonPath("$.name").value(propertyDTO.getName()))
-                .andExpect(jsonPath("$.description").value(propertyDTO.getDescription()))
+                .andExpect(jsonPath("$.name").value(propertyFormDTO.getName()))
+                .andExpect(jsonPath("$.totalPastureArea").value(propertyFormDTO.getTotalPastureArea()))
+                .andExpect(jsonPath("$.description").value(propertyFormDTO.getDescription()))
                 .andExpect(jsonPath("$.createdAt").exists());
 
         verify(service).update(anyString(), eq(propertyFormDTO));

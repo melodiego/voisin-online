@@ -1,10 +1,13 @@
 package br.com.voisinonline.service;
 
 import br.com.voisinonline.build.BuildProperty;
+import br.com.voisinonline.build.BuildState;
 import br.com.voisinonline.dto.PropertyDTO;
+import br.com.voisinonline.dto.StateDTO;
 import br.com.voisinonline.dto.form.PropertyFormDTO;
 import br.com.voisinonline.exception.RecordNotFoundException;
 import br.com.voisinonline.model.Property;
+import br.com.voisinonline.model.State;
 import br.com.voisinonline.repository.PropertyRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +38,10 @@ public class PropertyServiceTest {
     @Mock
     private ModelMapper mapper;
 
-    @InjectMocks
+    @Mock
+    private StateService stateService;
+
+    @Mock
     private PropertyService service;
 
     @Test
@@ -57,14 +64,17 @@ public class PropertyServiceTest {
     public void shouldUpdatePropertyDTOValidTest() {
         Property propertyIn = BuildProperty.buildProperty();
         Property propertyOut = BuildProperty.buildProperty();
-        PropertyFormDTO PropertyFormDTO = BuildProperty.buildPropertyFormDTO();
-        PropertyDTO PropertyDTO = BuildProperty.buildPropertyDTO();
+        PropertyFormDTO propertyFormDTO = BuildProperty.buildPropertyFormDTO();
+        State state = BuildState.buildState();
+        PropertyDTO propertyDTO = BuildProperty.buildPropertyDTO();
+
         when(repository.findById(id)).thenReturn(Optional.of(propertyIn));
         when(repository.save(propertyIn)).thenReturn(propertyOut);
         when(mapper.map(any(), eq(Property.class))).thenReturn(propertyIn);
-        when(mapper.map(any(), eq(PropertyDTO.class))).thenReturn(PropertyDTO);
-        PropertyDTO propertyDTOSaved = service.update(id, PropertyFormDTO);
-        assertEquals(propertyDTOSaved, PropertyDTO);
+        when(mapper.map(any(), eq(PropertyDTO.class))).thenReturn(propertyDTO);
+        when(stateService.findStateById(1L)).thenReturn(state);
+        PropertyDTO propertyDTOSaved = service.update(id, propertyFormDTO);
+        assertEquals(propertyDTOSaved, propertyDTO);
         verify(repository).save(eq(propertyIn));
     }
 
