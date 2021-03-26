@@ -7,13 +7,11 @@ import br.com.voisinonline.dto.form.PropertyFormDTO;
 import br.com.voisinonline.exception.BadRequestException;
 import br.com.voisinonline.exception.RecordNotFoundException;
 import br.com.voisinonline.model.State;
-import br.com.voisinonline.repository.StateRepository;
 import br.com.voisinonline.service.PropertyService;
 import br.com.voisinonline.service.StateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -24,14 +22,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Collections;
 
+import static br.com.voisinonline.util.Constants.*;
+import static br.com.voisinonline.util.Constants.PropertyConstants.CANNOT_FIND_ANY_REGISTRY_WITH_THIS_ID;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static br.com.voisinonline.util.Constants.*;
-import static br.com.voisinonline.util.Constants.PropertyConstants.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PropertyController.class)

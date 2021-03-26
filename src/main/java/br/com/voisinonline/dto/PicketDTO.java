@@ -16,6 +16,7 @@ public class PicketDTO implements Serializable {
     private String id;
     private String name;
     private String description;
+    private Double picketArea;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 }

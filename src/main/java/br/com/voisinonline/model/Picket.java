@@ -31,6 +31,8 @@ public class Picket implements Serializable {
     private String name;
     @Field("description")
     private String description;
+    @Field("picketArea")
+    private Double picketArea;
     @DBRef(lazy = false)
     @NotNull
     private PropertySector sector;
