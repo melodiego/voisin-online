@@ -12,7 +12,7 @@ public interface BuildProperty {
         return Property.builder()
                 .id("123")
                 .name("Test")
-                .totalPastureArea(1231L)
+                .totalPastureArea(12.0d)
                 .description("voisin")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -23,9 +23,9 @@ public interface BuildProperty {
         return PropertyFormDTO.builder()
                 .name("Test voisin")
                 .description("Description")
-                .ufId(1L)
-                .cityCodeIbge("123")
-                .totalPastureArea(1231L)
+                .state("Alagoas")
+                .city("Maceió")
+                .totalPastureArea(12.0d)
                 .build();
     }
 
@@ -37,7 +37,7 @@ public interface BuildProperty {
         return PropertyDTO.builder()
                 .id("123")
                 .name("Test voisin")
-                .totalPastureArea(1231L)
+                .totalPastureArea(12.0d)
                 .description("Description")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())

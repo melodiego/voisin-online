@@ -31,11 +31,13 @@ public class Property implements Serializable {
     @Field("description")
     private String description;
     @Field("total_pasture_area")
-    private Long totalPastureArea;
+    private Double totalPastureArea;
+    @Field("city")
+    private String city;
+    @Field("state")
+    private String state;
     @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
     @Field("updated_at")
     private LocalDateTime updatedAt;
-    @Field("city")
-    private City city;
 }
